@@ -204,21 +204,21 @@
 			<% for (var i = 0; i < data.length; i++) { -%>
 				
 
-					<a href="#list-empty" class="filterDiscussions all unread single" id="list-empty-list" data-toggle="list" role="tab">
+					<a id="<%=data[i].id%>" href="" class="filterDiscussions all unread single discuss" data-toggle="list" role="tab">
 						<img class="avatar-md" src="/img/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Michael" alt="avatar">
 						<div class="status">
 							<i class="material-icons offline">fiber_manual_record</i>
 						</div>
-<!-- 												<div class="new bg-pink">
+<!-- 						<div class="new bg-pink">
 							<span>+10</span>
-						</div> -->
-						<div class="data">
+						</div>
+ -->						<div class="data">
 							<h5><%=data[i].name%></h5>
 							<span>Sun</span>
 							<p>How can i improve my chances of getting a deposit?</p>
 						</div>
 					</a>
-			<% } -%>
+			<% } -%>	
 
 
 
@@ -764,70 +764,20 @@
 <div class="tab-content" id="nav-tabContent">
 
 
-
-
-
-
-
 <!-- Start of Babble -->
 <div class="babble tab-pane fade active show" id="list-chat" role="tabpanel" aria-labelledby="list-chat-list">
-	<!-- Start of Chat -->
-	<div class="chat" id="chat1">
-		<div class="top">
-			<div class="container">
-				<div class="col-md-12">
-					<div class="inside">
-						<a href="#"><img class="avatar-md" src="/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar"></a>
-						<div class="status">
-							<i class="material-icons online">fiber_manual_record</i>
-						</div>
-						<div class="data">
-							<h5><a href="#">Keith Morris</a></h5>
-							<span>Active now</span>
-						</div>
-						<button class="btn connect d-md-block d-none" name="1"><i class="material-icons md-30">phone_in_talk</i></button>
-						<button class="btn connect d-md-block d-none" name="1"><i class="material-icons md-36">videocam</i></button>
-						<button class="btn d-md-block d-none"><i class="material-icons md-30">info</i></button>
-						<div class="dropdown">
-							<button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons md-30">more_vert</i></button>
-							<div class="dropdown-menu dropdown-menu-right">
-								<button class="dropdown-item connect" name="1"><i class="material-icons">phone_in_talk</i>Voice Call</button>
-								<button class="dropdown-item connect" name="1"><i class="material-icons">videocam</i>Video Call</button>
-								<hr>
-								<button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
-								<button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>
-								<button class="dropdown-item"><i class="material-icons">delete</i>Delete Contact</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="content" id="content">
-			<div class="container">
-				<div class="col-md-12" id="chat-body">
-
-				</div>
-			</div>
-		</div>
+<div class="chat" id="chat">
+	<div class="content empty">
 		<div class="container">
 			<div class="col-md-12">
-				<div class="bottom">
-					<div class="position-relative w-100">
-						<textarea class="form-control" placeholder="Start typing for reply..." rows="1" id="message"></textarea>
-						<button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
-						<button class="btn send" id="sendMessage"><i class="material-icons">send</i></button>
-					</div>
-					<label>
-						<input type="file">
-						<span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
-					</label> 
+				<div class="no-messages">
+					<i class="material-icons md-48">forum</i>
+					<p>Seems people are shy to start the chat. Break the ice send the first message.</p>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- End of Chat -->
+</div>
 </div>
 <!-- End of Babble -->
 
@@ -848,10 +798,72 @@
 <script src="/js/vendor/popper.min.js"></script>
 <script src="/js/swipe.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+
+
+
+
+
 <script>
-function scrollToBottom(el) { el.scrollTop = el.scrollHeight; }
-scrollToBottom(document.getElementById('content'));
+	$(".discuss").on("click", function(e) {
+		$("#chat").html('\
+		<div class="top">\
+			<div class="container">\
+				<div class="col-md-12">\
+					<div class="inside">\
+						<a href="#"><img class="avatar-md" src="/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar"></a>\
+						<div class="status">\
+							<i class="material-icons online">fiber_manual_record</i>\
+						</div>\
+						<div class="data">\
+							<h5><a href="#" id="chating-user">' + $(this).children(".data").children("h5").text() + '</a></h5>\
+							<span>Active now</span>\
+						</div>\
+						<button class="btn connect d-md-block d-none" name="1"><i class="material-icons md-30">phone_in_talk</i></button>\
+						<button class="btn connect d-md-block d-none" name="1"><i class="material-icons md-36">videocam</i></button>\
+						<button class="btn d-md-block d-none"><i class="material-icons md-30">info</i></button>\
+						<div class="dropdown">\
+							<button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons md-30">more_vert</i></button>\
+							<div class="dropdown-menu dropdown-menu-right">\
+								<button class="dropdown-item connect" name="1"><i class="material-icons">phone_in_talk</i>Voice Call</button>\
+								<button class="dropdown-item connect" name="1"><i class="material-icons">videocam</i>Video Call</button>\
+								<hr>\
+								<button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>\
+								<button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>\
+								<button class="dropdown-item"><i class="material-icons">delete</i>Delete Contact</button>\
+							</div>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
+		</div>\
+		<div class="content" id="content">\
+			<div class="container">\
+				<div class="col-md-12" id="chat-body">\
+				</div>\
+			</div>\
+		</div>\
+		<div class="container">\
+			<div class="col-md-12">\
+				<div class="bottom">\
+					<div class="position-relative w-100">\
+						<textarea class="form-control" placeholder="Start typing for reply..." rows="1" id="message"></textarea>\
+						<button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>\
+						<button class="btn send" id="sendMessage"><i class="material-icons">send</i></button>\
+					</div>\
+					<label>\
+						<input type="file">\
+						<span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>\
+					</label>\
+				</div>\
+			</div>\
+		</div>\
+			');
+	});
+
+
+
 </script>
+
 
 
 <script>
@@ -862,12 +874,10 @@ scrollToBottom(document.getElementById('content'));
   var socket_id;
   socket.on('connect', () => {
       socket_id = socket.id;
-
+console.log(socket_id)
   socket.emit('setUname', { name: username, socket_id: socket_id });
 
-  $("#sendMessage").on("click", function () {
-     	// alert("ayaa")
-
+  $(document).on("click", "#sendMessage" , function() {
      var msg = $("#message").val();
      $("#message").val("");
 		$("#chat-body").append('\
@@ -883,7 +893,7 @@ scrollToBottom(document.getElementById('content'));
 							</div>\
 							');
 
-        socket.emit('msg', {message: msg, name: username, socket_id: socket_id});
+        socket.emit('msg', {message: msg, from: username, socket_id: socket_id, to: $("#chating-user").text()});
   });
   socket.on('newmsg', function(data) {
 

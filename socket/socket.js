@@ -33,16 +33,10 @@ users = [];
 
 
    socket.on('msg', function(data) {
-    var keys = Object.keys(users);
-    var to;
-      for (var i = 0; i < keys.length; i++) {
-        if (keys[i] != data.name)
-          to = keys[i];
-      }
-      io.to(users[to]).emit('newmsg', data);
+      io.to(users[data.to]).emit('newmsg', data);
    });
 
-// =========== Simple One to One chat ================
+// =========== Simple One to One chat End ================
 
 
 
