@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src = "/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+	<input type="text" id="name"><br>
+	<button>Event</button>
+	<div id="message-container"></div>
+	<script>
+	var socket = io();
+
+	var socket_id;
+	socket.on('connect', () => {
+	    socket_id = socket.id; // an alphanumeric id...
+	});
+
+	$("button").on("click", function(e) {
+		socket.emit("setUsername", {"name": $("#name").val(), "socket_id": socket_id});
+	});
+
+	socket.on('user', function(data) {
+		$("#message-container").children().remove();
+		$("#message-container").append('<div><b>' + data + '</b></div>');
+	})
+
+	socket.on('userExist', function(data) {
+		$("#message-container").children().remove();
+		$("#message-container").append('<div><b>' + data + '</b></div>');
+	})
+
+</script>
+</body>
+</html>

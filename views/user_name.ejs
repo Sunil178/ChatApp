@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+	<h1>Enter name: </h1>
+	<input type="text" id="name" placeholder="Enter name">
+	<button>Click</button>
+
+<script>
+	$("button").on("click", function() {
+		window.location.href = "/chat/" + $("#name").val();
+	});
+</script>
+
+</body>
+</html>
