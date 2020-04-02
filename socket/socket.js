@@ -28,14 +28,18 @@ users = [];
 // =========== Simple One to One chat ================
 
   socket.on("setUname", (data) => {
-    console.log(data)
-    users.push(data.socket_id);
+    users[data.name] = data.socket_id;
   });
 
 
    socket.on('msg', function(data) {
-    // console.log(users)
-      io.to(users[0]).to(users[1]).emit('newmsg', data);
+    var keys = Object.keys(users);
+    var to;
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i] != data.name)
+          to = keys[i];
+      }
+      io.to(users[to]).emit('newmsg', data);
    });
 
 // =========== Simple One to One chat ================

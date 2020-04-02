@@ -760,40 +760,6 @@
 </div>
 </div>
 <!-- End of Add Friends -->
-<!-- Start of Create Chat -->
-<div class="modal fade" id="startnewchat" tabindex="-1" role="dialog" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-<div class="requests">
-	<div class="title">
-		<h1>Start new chat</h1>
-		<button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
-	</div>
-	<div class="content">
-		<form>
-			<div class="form-group">
-				<label for="participant">Recipient:</label>
-				<input type="text" class="form-control" id="participant" placeholder="Add recipient..." required>
-				<div class="user" id="recipient">
-					<img class="avatar-sm" src="/img/avatars/avatar-female-5.jpg" alt="avatar">
-					<h5>Keith Morris</h5>
-					<button class="btn"><i class="material-icons">close</i></button>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="topic">Topic:</label>
-				<input type="text" class="form-control" id="topic" placeholder="What's the topic?" required>
-			</div>
-			<div class="form-group">
-				<label for="message">Message:</label>
-				<textarea class="text-control" id="message" placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
-			</div>
-			<button type="submit" class="btn button w-100">Start New Chat</button>
-		</form>
-	</div>
-</div>
-</div>
-</div>
-<!-- End of Create Chat -->
 <div class="main">
 <div class="tab-content" id="nav-tabContent">
 
@@ -880,7 +846,7 @@
 					<div class="position-relative w-100">
 						<textarea class="form-control" placeholder="Start typing for reply..." rows="1" id="message"></textarea>
 						<button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
-						<button type="submit" class="btn send" id="sendMessage"><i class="material-icons">send</i></button>
+						<button class="btn send" id="sendMessage"><i class="material-icons">send</i></button>
 					</div>
 					<label>
 						<input type="file">
@@ -925,17 +891,13 @@ scrollToBottom(document.getElementById('content'));
   var socket_id;
   socket.on('connect', () => {
       socket_id = socket.id;
-  	// console.log(socket_id);
-  });
-
-  console.log(socket_id);
 
   socket.emit('setUname', { name: username, socket_id: socket_id });
 
   $("#sendMessage").on("click", function () {
+     	// alert("ayaa")
 
      var msg = $("#message").val();
-     if(msg) {
 
 		$("#chat-body").append('\
 							<div class="message me">\
@@ -950,11 +912,9 @@ scrollToBottom(document.getElementById('content'));
 							</div>\
 							');
 
-        socket.emit('msg', {message: msg, user: username, socket_id: socket_id});
-     }
+        socket.emit('msg', {message: msg, name: username, socket_id: socket_id});
   });
   socket.on('newmsg', function(data) {
-     if(username) {
 
 		$("#chat-body").append('\
 					<div class="message">\
@@ -969,8 +929,11 @@ scrollToBottom(document.getElementById('content'));
 						</div>\
 					</div>'
 					);
-     }
+
   })
+
+  });
+
 </script>
 
 
