@@ -47,11 +47,7 @@ exports.userExist = (req, res) => {
 }
 
 exports.storeHistory = (req, res) => {
-	var history = new History({
-		from: req.from,
-		to: req.to,
-		message: req.message
-	});
+	var history = new History(req);
 
 	history.save((err, docs) => {
 		if (err) return res("failure");
@@ -64,4 +60,25 @@ exports.index = (req, res) => {
 		if(err) res.send("failure");
 	res.render('index', {data: docs, uname: req.params.name});
 	});
+}
+
+
+exports.findChat = (req, res) => {
+	History.find({
+		$or:
+		[
+			{
+				from: req.from,
+			},
+			{
+				from: req.to
+			}
+		]
+	},
+	(err, docs) => {
+		if (err) return res("failure");
+		docs.sort({time: 1});
+		return res(docs);
+	}
+	);
 }

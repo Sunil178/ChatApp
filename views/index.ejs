@@ -804,6 +804,14 @@
 
 
 <script>
+
+	var username = "<%-uname%>";
+
+
+  var socket = io();
+
+
+
 	$(".discuss").on("click", function(e) {
 		$("#chat").html('\
 		<div class="top">\
@@ -858,6 +866,8 @@
 			</div>\
 		</div>\
 			');
+
+		socket.emit("sendChatRequest", {from: username, to: $("#chating-user").text()});
 	});
 
 
@@ -867,9 +877,6 @@
 
 
 <script>
-	var username = "<%-uname%>";
-
-  var socket = io();
 
   var socket_id;
   socket.on('connect', () => {
@@ -917,6 +924,42 @@ console.log(socket_id)
 
 </script>
 
+
+<script>
+	socket.on("getChat", function (data) {
+		for (var i = 0; i < data.length; i++) {
+			if (data[i].from == username && $("#chating-user").text() == data[i].to) {
+				$("#chat-body").append('\
+					<div class="message me">\
+						<div class="text-main">\
+							<div class="text-group me">\
+								<div class="text me">\
+									<p>' + data[i].message + '</p>\
+								</div>\
+							</div>\
+							<span>11:32 AM</span>\
+						</div>\
+					</div>\
+				');	
+			}
+			if (data[i].from == $("#chating-user").text() && username == data[i].to) {
+				$("#chat-body").append('\
+					<div class="message">\
+						<img class="avatar-md" src="/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">\
+						<div class="text-main">\
+							<div class="text-group">\
+								<div class="text">\
+									<p>' + data[i].message + '</p>\
+								</div>\
+							</div>\
+							<span>09:46 AM</span>\
+						</div>\
+					</div>'
+					);
+			}
+		}
+	});
+</script>
 
 
 </body>

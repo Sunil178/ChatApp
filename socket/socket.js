@@ -7,7 +7,7 @@ users = [];
      console.log(socket.id + ' user connected');
 
 // =========== User Register ================
-     
+
      socket.on('setUsername', function(data) {
       controller.userExist(data, response => {
         if (response == "exist")
@@ -33,12 +33,19 @@ users = [];
 
 
    socket.on('msg', function(data) {
-      io.to(users[data.to]).emit('newmsg', data);
+      controller.storeHistory(data, response => {
+        io.to(users[data.to]).emit('newmsg', data);
+      });
+   });
+
+
+   socket.on("sendChatRequest", data => {
+    controller.findChat(data, response => {
+      socket.emit("getChat", response);
+    });
    });
 
 // =========== Simple One to One chat End ================
-
-
 
 
      socket.on('disconnect', () => {
