@@ -5,6 +5,7 @@ var historySchema = new Schema({
   from: String,
   to: String,
   message: String,
+  type: Number,
   time : {
   	type : Date,
   	default: Date.now

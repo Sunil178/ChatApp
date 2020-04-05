@@ -1,4 +1,8 @@
 controller = require('../controllers/myController');
+var siofu = require("socketio-file-upload");
+var fs = require('fs');
+
+var file_name_last = 0;
 
 module.exports = function(io) {
 
@@ -33,9 +37,19 @@ users = [];
 
 
    socket.on('msg', function(data) {
+      if (data.type == 1)
+        data.message = "file_name" + file_name_last + "." + data.extension
       controller.storeHistory(data, response => {
-        io.to(users[data.to]).emit('newmsg', data);
+        if (data.type == 1) {
+          fs.writeFile(__dirname + "/../dist/" + data.message, data.file, function (err) {
+            if (err) throw err;
+              console.log('Saved!');
+              file_name_last++;
+            });
+        }
+          io.to(users[data.to]).emit('newmsg', data);
       });
+
    });
 
 
@@ -46,7 +60,6 @@ users = [];
    });
 
 // =========== Simple One to One chat End ================
-
 
      socket.on('disconnect', () => {
         console.log("A user disconnected")
