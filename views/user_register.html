@@ -23,13 +23,11 @@
 	});
 
 	socket.on('user', function(data) {
-		$("#message-container").children().remove();
-		$("#message-container").append('<div><b>' + data + '</b></div>');
+		$("#message-container").html('<div><b>' + data + '</b></div>');
 	})
 
 	socket.on('userExist', function(data) {
-		$("#message-container").children().remove();
-		$("#message-container").append('<div><b>' + data + '</b></div>');
+		$("#message-container").html('<div><b>' + data + '</b></div>');
 	})
 
 </script>

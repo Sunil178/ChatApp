@@ -12,8 +12,13 @@ app.set("view options", {layout: false});
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/', (req, res) => {
-	res.render("user_name");
+	res.render("sign-in");
 });
+
+app.get('/register', (req, res) => {
+	res.render("sign-up");
+});
+
 app.get('/chat/:name', controller.index);
 
 const httpServer = http.createServer(app);

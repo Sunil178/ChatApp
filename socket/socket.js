@@ -19,9 +19,9 @@ users = [];
         else {
           controller.storeUser(data, response => {
             if (response == "success")
-              socket.emit("user", data.name + " user registered successfully");
+              socket.emit("userSuccess", data.name + " user registered successfully");
             else
-              socket.emit("user", "There is error while registering" + data.name + " user")
+              socket.emit("userFailure", "There is error while registering" + data.name + " user")
           });
         }
       });
