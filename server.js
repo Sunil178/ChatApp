@@ -23,7 +23,7 @@ app.get('/chat/:name', controller.index);
 
 const httpServer = http.createServer(app);
 
-var server = httpServer.listen(8000);
+var server = httpServer.listen(2000);
 
 const socket = require("socket.io")(server);
 require("./socket/socket.js")(socket);
