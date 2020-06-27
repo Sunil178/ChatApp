@@ -42,7 +42,7 @@ exports.userExist = (req, res) => {
 	User.find({name: req.name}, "name", (err, docs) => {
 		if (err) return res("failure");
 		if (docs.length > 0) return res("exist");
-		else return res("empty");
+		return res("empty");
 	});
 }
 

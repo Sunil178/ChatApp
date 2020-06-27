@@ -12,6 +12,7 @@
 		<link href="/css/swipe.min.css" type="text/css" rel="stylesheet">
 		<!-- Favicon -->
 		<link href="/img/favicon.png" type="image/png" rel="icon">
+		<script src = "/socket.io/socket.io.js"></script>
 	</head>
 	<body class="start">
 		<main>
@@ -88,15 +89,30 @@
 
 
 <script type="text/javascript">
-	$("#sign-in-btn").on("click", function() {
-		if ($("#inputName").val())
-			window.location.href = "/chat/" + $("#inputName").val();
-		else
-			$("#message-container").html('\
-				<div class="alert alert-danger alert-dismissible fade show">\
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>\
-                    Name Field is Required\
-                </div>');
+	var socket = io();
+	socket.on('connect', () => {
+		socket.on("userExist", function (data) {
+			if (data.status)
+				window.location.href = "/chat/" + data.name;
+			else
+				$("#message-container").html('\
+					<div class="alert alert-danger alert-dismissible fade show">\
+	                    <button type="button" class="close" data-dismiss="alert">&times;</button>\
+	                    ' + data.name + ' not found\
+	                </div>');
+		});
+
+		$("#sign-in-btn").on("click", function() {
+			var username = $("#inputName").val();
+			if (username)
+					socket.emit('sign_in', { name: username });
+			else
+				$("#message-container").html('\
+					<div class="alert alert-danger alert-dismissible fade show">\
+	                    <button type="button" class="close" data-dismiss="alert">&times;</button>\
+	                    Name Field is Required\
+	                </div>');
+		});
 	});
 </script>
 

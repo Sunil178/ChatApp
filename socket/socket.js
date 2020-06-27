@@ -32,7 +32,12 @@ users = [];
 // ================ User Sign in =================
 
   socket.on('sign_in', function(data) {
-    
+      controller.userExist(data, response => {
+        if (response == "exist")
+          socket.emit("userExist", {status: true, name: data.name});
+        else
+          socket.emit("userExist", {status: false, name: data.name});
+      });
   });
 
 
