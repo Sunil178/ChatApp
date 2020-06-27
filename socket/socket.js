@@ -29,6 +29,15 @@ users = [];
     });
 // =========== User Register End ================
 
+// ================ User Sign in =================
+
+  socket.on('sign_in', function(data) {
+    
+  });
+
+
+// ================ User Sign in End =================
+
 // =========== Simple One to One chat ================
 
   socket.on("setUname", (data) => {

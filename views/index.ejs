@@ -798,8 +798,6 @@
 
 
 <script>
-	var datetime = new Date();
-	var time;
 	var username = "<%-uname%>";
 
 
@@ -875,7 +873,6 @@
   var socket_id;
   socket.on('connect', () => {
       socket_id = socket.id;
-console.log(socket_id)
   socket.emit('setUname', { name: username, socket_id: socket_id });
 
   $(document).on("keypress", "#message", function (e) {
@@ -887,7 +884,8 @@ console.log(socket_id)
   $(document).on("click", "#sendMessage" , function() {
      var msg = $("#message").val();
      $("#message").val("");
-     time = datetime.getHours() + ":" + datetime.getMinutes() + " " + (datetime.getHours() >= 12 ? "PM" : "AM");
+     datetime = new Date();
+     time = datetime.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 		$("#chat-body").append('\
 							<div class="message me">\
 								<div class="text-main">\
@@ -914,7 +912,8 @@ console.log(socket_id)
   	var result = str.match(patt);
 	if (input.files && input.files[0]) {
 	    var reader = new FileReader();
-	    time = datetime.getHours() + ":" + datetime.getMinutes() + " " + (datetime.getHours() >= 12 ? "PM" : "AM");
+	    datetime = new Date();
+	    time = datetime.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 	    reader.onload = function (e) {
 	    	if (result) {
 				$("#chat-body").append('\
@@ -960,7 +959,8 @@ console.log(socket_id)
 
 
   socket.on('newmsg', function (data) {
-  	time = datetime.getHours() + ":" + datetime.getMinutes() + " " + (datetime.getHours() >= 12 ? "PM" : "AM");
+  	datetime = new Date();
+  	time = datetime.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   	if (data.type == 0) {
 		$("#chat-body").append('\
 			<div class="message">\
@@ -1030,7 +1030,7 @@ console.log(socket_id)
 	socket.on("getChat", function (data) {
 		for (var i = 0; i < data.length; i++) {
 			var dt = new Date(data[i].time);
-			time = dt.getHours() + ":" + dt.getMinutes() + " " + (dt.getHours() >= 12 ? "PM" : "AM");
+			time = dt.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 			var ext = data[i].message.split(".");
 			ext = ext.slice(-1).pop();
 			if (data[i].from == username && $("#chating-user").text() == data[i].to) {
