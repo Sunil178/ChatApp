@@ -76,6 +76,7 @@ exports.findChat = (req, res) => {
 		]
 	},
 	(err, docs) => {
+		console.log(docs);
 		if (err) return res("failure");
 		docs.sort({time: 1});
 		return res(docs);
