@@ -75,10 +75,10 @@ exports.findChat = (req, res) => {
 			}
 		]
 	},
-	(err, docs) => {
+	)
+	.sort({time: 1})
+	.exec((err, docs) => {
 		if (err) return res("failure");
-		docs.find().sort({time: 1});
 		return res(docs);
-	}
-	);
+	});
 }
